@@ -3,22 +3,23 @@ object frmCalculadora: TfrmCalculadora
   Top = 0
   BorderStyle = bsSingle
   Caption = 'CALCULADORA'
-  ClientHeight = 371
-  ClientWidth = 255
+  ClientHeight = 376
+  ClientWidth = 254
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'Tahoma'
+  Font.Name = 'Courier New'
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
+  OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 14
   object btnSete: TSpeedButton
     Left = 20
-    Top = 144
+    Top = 137
     Width = 49
     Height = 49
     Caption = '7'
@@ -32,7 +33,7 @@ object frmCalculadora: TfrmCalculadora
   end
   object btnOito: TSpeedButton
     Left = 75
-    Top = 144
+    Top = 137
     Width = 49
     Height = 49
     Caption = '8'
@@ -46,7 +47,7 @@ object frmCalculadora: TfrmCalculadora
   end
   object btnNove: TSpeedButton
     Left = 130
-    Top = 144
+    Top = 137
     Width = 49
     Height = 49
     Caption = '9'
@@ -60,7 +61,7 @@ object frmCalculadora: TfrmCalculadora
   end
   object btnQuatro: TSpeedButton
     Left = 20
-    Top = 199
+    Top = 192
     Width = 49
     Height = 49
     Caption = '4'
@@ -74,7 +75,7 @@ object frmCalculadora: TfrmCalculadora
   end
   object btnCinco: TSpeedButton
     Left = 75
-    Top = 199
+    Top = 192
     Width = 49
     Height = 49
     Caption = '5'
@@ -88,7 +89,7 @@ object frmCalculadora: TfrmCalculadora
   end
   object btnSeis: TSpeedButton
     Left = 130
-    Top = 199
+    Top = 192
     Width = 49
     Height = 49
     Caption = '6'
@@ -102,7 +103,7 @@ object frmCalculadora: TfrmCalculadora
   end
   object btnUm: TSpeedButton
     Left = 20
-    Top = 254
+    Top = 247
     Width = 49
     Height = 49
     Caption = '1'
@@ -116,7 +117,7 @@ object frmCalculadora: TfrmCalculadora
   end
   object btnDois: TSpeedButton
     Left = 75
-    Top = 254
+    Top = 247
     Width = 49
     Height = 49
     Caption = '2'
@@ -130,7 +131,7 @@ object frmCalculadora: TfrmCalculadora
   end
   object btnTres: TSpeedButton
     Left = 130
-    Top = 254
+    Top = 247
     Width = 49
     Height = 49
     Caption = '3'
@@ -144,7 +145,7 @@ object frmCalculadora: TfrmCalculadora
   end
   object btnZero: TSpeedButton
     Left = 20
-    Top = 309
+    Top = 302
     Width = 49
     Height = 49
     Caption = '0'
@@ -158,7 +159,7 @@ object frmCalculadora: TfrmCalculadora
   end
   object btnVirgula: TSpeedButton
     Left = 75
-    Top = 309
+    Top = 302
     Width = 49
     Height = 49
     Caption = ','
@@ -173,7 +174,7 @@ object frmCalculadora: TfrmCalculadora
   object btnFatorial: TSpeedButton
     Tag = 5
     Left = 185
-    Top = 89
+    Top = 82
     Width = 49
     Height = 49
     Caption = 'n!'
@@ -188,7 +189,7 @@ object frmCalculadora: TfrmCalculadora
   object btnMultiplicacao: TSpeedButton
     Tag = 3
     Left = 185
-    Top = 199
+    Top = 192
     Width = 49
     Height = 49
     Caption = #215
@@ -203,7 +204,7 @@ object frmCalculadora: TfrmCalculadora
   object btnIgual: TSpeedButton
     Tag = 6
     Left = 130
-    Top = 309
+    Top = 302
     Width = 49
     Height = 49
     Caption = '='
@@ -218,7 +219,7 @@ object frmCalculadora: TfrmCalculadora
   object btnSoma: TSpeedButton
     Tag = 1
     Left = 185
-    Top = 309
+    Top = 302
     Width = 49
     Height = 49
     Caption = '+'
@@ -233,7 +234,7 @@ object frmCalculadora: TfrmCalculadora
   object btnSubtracao: TSpeedButton
     Tag = 2
     Left = 185
-    Top = 254
+    Top = 247
     Width = 49
     Height = 49
     Caption = '-'
@@ -248,7 +249,7 @@ object frmCalculadora: TfrmCalculadora
   object btnDivisao: TSpeedButton
     Tag = 4
     Left = 185
-    Top = 144
+    Top = 137
     Width = 49
     Height = 49
     Caption = #247
@@ -262,7 +263,7 @@ object frmCalculadora: TfrmCalculadora
   end
   object btnApagar: TSpeedButton
     Left = 130
-    Top = 89
+    Top = 82
     Width = 49
     Height = 49
     Caption = #213
@@ -276,7 +277,7 @@ object frmCalculadora: TfrmCalculadora
   end
   object btnLimpar: TSpeedButton
     Left = 20
-    Top = 89
+    Top = 82
     Width = 104
     Height = 49
     Caption = 'C'
@@ -288,9 +289,18 @@ object frmCalculadora: TfrmCalculadora
     ParentFont = False
     OnClick = btnLimparClick
   end
+  object lbVersao: TLabel
+    Left = 20
+    Top = 357
+    Width = 70
+    Height = 14
+    BiDiMode = bdLeftToRight
+    Caption = 'v. 1.0.0.0'
+    ParentBiDiMode = False
+  end
   object edtPainel: TEdit
     Left = 20
-    Top = 15
+    Top = 8
     Width = 214
     Height = 27
     Alignment = taRightJustify
@@ -307,7 +317,7 @@ object frmCalculadora: TfrmCalculadora
   end
   object edtEntradaValor: TEdit
     Left = 20
-    Top = 38
+    Top = 31
     Width = 214
     Height = 38
     Alignment = taRightJustify

@@ -29,12 +29,14 @@ type
     btnLimpar: TSpeedButton;
     edtPainel: TEdit;
     edtEntradaValor: TEdit;
+    lbVersao: TLabel;
     procedure NumeroClick(Sender: TObject);
     procedure btnLimparClick(Sender: TObject);
     procedure OperacaoClick(Sender: TObject);
     procedure btnVirgulaClick(Sender: TObject);
     procedure btnApagarClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     Valor1, Valor2: double;
@@ -50,6 +52,8 @@ type
     { Public declarations }
   end;
 
+function GetVersaoAplicacao: string;
+
 var
   frmCalculadora: TfrmCalculadora;
 
@@ -59,6 +63,30 @@ uses
   System.StrUtils;
 
 {$R *.dfm}
+
+function GetVersaoAplicacao: string;
+var
+   VerInfoSize: DWORD;
+   VerInfo: Pointer;
+   VerValueSize: DWORD;
+   VerValue: PVSFixedFileInfo;
+   Dummy: DWORD;
+begin
+   VerInfoSize := GetFileVersionInfoSize(PChar(ParamStr(0)), Dummy);
+   GetMem(VerInfo, VerInfoSize);
+   GetFileVersionInfo(PChar(ParamStr(0)), 0, VerInfoSize, VerInfo);
+   VerQueryValue(VerInfo, '\', Pointer(VerValue), VerValueSize);
+
+   with VerValue^ do
+   begin
+      Result := IntToStr(dwFileVersionMS shr 16);
+      Result := Result + '.' + IntToStr(dwFileVersionMS and $FFFF);
+      Result := Result + '.' + IntToStr(dwFileVersionLS shr 16);
+      Result := Result + '.' + IntToStr(dwFileVersionLS and $FFFF);
+   end;
+
+   FreeMem(VerInfo, VerInfoSize);
+end;
 
 function TfrmCalculadora.Calcular(AValor1, AValor2: double;
   AOperacao: integer): double;
@@ -203,6 +231,11 @@ end;
 procedure TfrmCalculadora.OperacaoClick(Sender: TObject);
 begin
   AtribuirOperacao(TButton(Sender).Tag);
+end;
+
+procedure TfrmCalculadora.FormCreate(Sender: TObject);
+begin
+   lbVersao.Caption := 'v ' + GetVersaoAplicacao();
 end;
 
 procedure TfrmCalculadora.FormKeyDown(Sender: TObject; var Key: Word;
