@@ -1,0 +1,220 @@
+unit uCalculadora;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.StdCtrls;
+
+type
+  TfrmCalculadora = class(TForm)
+    btnSete: TSpeedButton;
+    btnOito: TSpeedButton;
+    btnNove: TSpeedButton;
+    btnQuatro: TSpeedButton;
+    btnCinco: TSpeedButton;
+    btnSeis: TSpeedButton;
+    btnUm: TSpeedButton;
+    btnDois: TSpeedButton;
+    btnTres: TSpeedButton;
+    btnZero: TSpeedButton;
+    btnVirgula: TSpeedButton;
+    btnFatorial: TSpeedButton;
+    btnMultiplicacao: TSpeedButton;
+    btnIgual: TSpeedButton;
+    btnSoma: TSpeedButton;
+    btnSubtracao: TSpeedButton;
+    btnDivisao: TSpeedButton;
+    btnApagar: TSpeedButton;
+    btnLimpar: TSpeedButton;
+    edtPainel: TEdit;
+    edtEntradaValor: TEdit;
+    procedure NumeroClick(Sender: TObject);
+    procedure btnLimparClick(Sender: TObject);
+    procedure OperacaoClick(Sender: TObject);
+    procedure btnVirgulaClick(Sender: TObject);
+    procedure btnApagarClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+  private
+    { Private declarations }
+    Valor1, Valor2: double;
+    Resultado: double;
+    Operacao, EstadoNumero, EstadoOperacao: integer;
+
+    procedure DigitarNumero(ANumero: String);
+    procedure AtribuirValor(ANumero: String);
+    procedure AtribuirOperacao(AOperacao: integer);
+    function Calcular(AValor1, AValor2: double; AOperacao: integer): double;
+    function CalcularFatorial(AValorFatorial: integer): double;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCalculadora: TfrmCalculadora;
+
+implementation
+
+uses
+  System.StrUtils;
+
+{$R *.dfm}
+
+function TfrmCalculadora.Calcular(AValor1, AValor2: double;
+  AOperacao: integer): double;
+begin
+  case AOperacao of
+    1: Result := AValor1 + AValor2;
+    2: Result := AValor1 - AValor2;
+    3: Result := AValor1 * AValor2;
+    4:
+    begin
+      if AValor2 = 0 then
+        Result := 0
+      else
+        Result := AValor1 / AValor2;
+    end;
+  end;
+end;
+
+function TfrmCalculadora.CalcularFatorial(AValorFatorial: integer): double;
+var
+  I: integer;
+begin
+  Result := AValorFatorial;
+  for I := AValorFatorial downto 1 do
+    if I - 1 > 0 then
+      Result := Result * (I - 1);
+end;
+
+procedure TfrmCalculadora.AtribuirValor(ANumero: string);
+begin
+	case EstadoNumero of
+    0:
+    begin
+      DigitarNumero(ANumero);
+      Valor1 := StrToFloat(edtEntradaValor.Text);
+    end;
+    1:
+    begin
+      if EstadoOperacao = 0 then
+      begin
+        edtEntradaValor.Clear;
+        EstadoOperacao := 1;
+      end;
+      DigitarNumero(ANumero);
+      Valor2 := StrToFloat(edtEntradaValor.Text);
+    end;
+  end;
+end;
+
+procedure TfrmCalculadora.AtribuirOperacao(AOperacao: integer);
+var
+  LSimboloTag: string;
+begin
+  case AOperacao of
+    1:  LSimboloTag := ' + ';
+    2:  LSimboloTag := ' - ';
+    3:  LSimboloTag := ' × ';
+    4:  LSimboloTag := ' ÷ ';
+    5:  LSimboloTag := ' ! ';
+    6:  LSimboloTag := ' = ';
+  end;
+
+	case EstadoOperacao of
+    0:
+    begin
+      if AOperacao = 5 then
+      begin
+        Resultado := CalcularFatorial(Trunc(Valor1));
+        edtEntradaValor.Text := Resultado.ToString;
+        EstadoOperacao := 1;
+      end
+      else
+        begin
+        if EstadoNumero = 0 then
+          edtPainel.Text := edtPainel.Text + Valor1.ToString + LSimboloTag
+        else
+          edtPainel.Text := Copy(edtPainel.Text, 0, Length(edtPainel.Text) - 3) + LSimboloTag;
+      end;
+    end;
+    1:
+    begin
+      edtPainel.Text := edtPainel.Text + Valor2.ToString + LSimboloTag;
+      Resultado := Calcular(Valor1, Valor2, Operacao);
+      edtEntradaValor.Text := Resultado.ToString;
+      Valor1 := Resultado;
+      EstadoOperacao := 0;
+    end;
+  end;
+
+  Operacao := AOperacao;
+  EstadoNumero := 1;
+end;
+
+procedure TfrmCalculadora.DigitarNumero(ANumero: String);
+begin
+  if edtEntradaValor.Text = '0' then
+    edtEntradaValor.Text := ANumero
+  else
+    edtEntradaValor.Text := edtEntradaValor.Text + ANumero;
+end;
+
+procedure TfrmCalculadora.btnApagarClick(Sender: TObject);
+begin
+  if Length(edtEntradaValor.Text) > 1 then
+    edtEntradaValor.Text := Copy(edtEntradaValor.Text, 0, Length(edtEntradaValor.Text) - 1)
+  else
+    edtEntradaValor.Text := '0'
+end;
+
+procedure TfrmCalculadora.btnLimparClick(Sender: TObject);
+begin
+  edtEntradaValor.Text := '0';
+  edtPainel.Clear;
+  Valor1 := 0;
+  Valor2 := 0;
+  Resultado := 0;
+  Operacao := 0;
+  EstadoNumero := 0;
+  EstadoOperacao := 0;
+end;
+
+procedure TfrmCalculadora.NumeroClick(Sender: TObject);
+begin
+  AtribuirValor(TButton(Sender).Caption);
+end;
+
+procedure TfrmCalculadora.btnVirgulaClick(Sender: TObject);
+begin
+  if edtEntradaValor.Text = ''then
+    edtEntradaValor.Text := '0';
+  if Pos(',',edtEntradaValor.text) = 0 then
+    edtEntradaValor.Text := edtEntradaValor.Text + ',';
+end;
+
+procedure TfrmCalculadora.OperacaoClick(Sender: TObject);
+begin
+  AtribuirOperacao(TButton(Sender).Tag);
+end;
+
+procedure TfrmCalculadora.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  case Key of
+    27                     : btnLimpar.Click();  {ESC}
+    VK_BACK                : btnApagar.Click();
+    VK_RETURN              : btnIgual.Click();
+    VK_NUMPAD0..VK_NUMPAD9 : AtribuirValor(IntToStr(key-96));
+    VK_MULTIPLY            : btnMultiplicacao.Click();
+    VK_ADD                 : btnSoma.Click();
+    VK_SUBTRACT            : btnSubtracao.Click();
+    VK_DIVIDE              : btnDivisao.Click();
+    VK_DECIMAL             : btnVirgula.Click();
+    VK_OEM_COMMA           : btnVirgula.Click();
+    VK_OEM_PERIOD          : btnVirgula.Click();
+    194                    : btnVirgula.Click();  {NUM PONTO}
+  end;
+end;
+
+end.
