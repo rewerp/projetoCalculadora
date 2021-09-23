@@ -66,18 +66,18 @@ uses
 
 function GetVersaoAplicacao: string;
 var
-   VerInfoSize: DWORD;
-   VerInfo: Pointer;
-   VerValueSize: DWORD;
-   VerValue: PVSFixedFileInfo;
-   Dummy: DWORD;
+   LVerInfoSize: DWORD;
+   LVerInfo: Pointer;
+   LVerValueSize: DWORD;
+   LVerValue: PVSFixedFileInfo;
+   LHandle: DWORD;
 begin
-   VerInfoSize := GetFileVersionInfoSize(PChar(ParamStr(0)), Dummy);
-   GetMem(VerInfo, VerInfoSize);
-   GetFileVersionInfo(PChar(ParamStr(0)), 0, VerInfoSize, VerInfo);
-   VerQueryValue(VerInfo, '\', Pointer(VerValue), VerValueSize);
+   LVerInfoSize := GetFileVersionInfoSize(PChar(ParamStr(0)), LHandle);
+   GetMem(LVerInfo, LVerInfoSize);
+   GetFileVersionInfo(PChar(ParamStr(0)), 0, LVerInfoSize, LVerInfo);
+   VerQueryValue(LVerInfo, '\', Pointer(LVerValue), LVerValueSize);
 
-   with VerValue^ do
+   with LVerValue^ do
    begin
       Result := IntToStr(dwFileVersionMS shr 16);
       Result := Result + '.' + IntToStr(dwFileVersionMS and $FFFF);
@@ -85,29 +85,27 @@ begin
       Result := Result + '.' + IntToStr(dwFileVersionLS and $FFFF);
    end;
 
-   FreeMem(VerInfo, VerInfoSize);
+   FreeMem(LVerInfo, LVerInfoSize);
 end;
 
 function TfrmCalculadora.Calcular(AValor1, AValor2: double;
   AOperacao: integer): double;
 begin
+  Result := 0;
+
   case AOperacao of
     1: Result := AValor1 + AValor2;
     2: Result := AValor1 - AValor2;
     3: Result := AValor1 * AValor2;
     4:
     begin
-      if (AValor2 = 0) then
-        Result := 0
-      else
+      if (AValor2 <> 0) then
         Result := AValor1 / AValor2;
     end;
   end;
 end;
 
 function TfrmCalculadora.CalcularFatorial(AValorFatorial: integer): double;
-var
-  I: integer;
 begin
   if (AValorFatorial = 0) then
      CalcularFatorial := 1
