@@ -233,7 +233,7 @@ end;
 
 procedure TfrmCalculadora.FormCreate(Sender: TObject);
 begin
-   lbVersao.Caption := 'v ' + GetVersaoAplicacao();
+   lbVersao.Caption := 'versão ' + GetVersaoAplicacao() + '.23092021.1738';
 end;
 
 procedure TfrmCalculadora.FormKeyDown(Sender: TObject; var Key: Word;
