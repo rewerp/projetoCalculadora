@@ -77,7 +77,7 @@ begin
    GetMem(LVerInfo, LVerInfoSize);
    GetFileVersionInfo(PChar(ParamStr(0)), 0, LVerInfoSize, LVerInfo);
    VerQueryValue(LVerInfo, '\', Pointer(LVerValue), LVerValueSize);
-
+{teste}
    with LVerValue^ do
    begin
       Result := IntToStr(dwFileVersionMS shr 16);
