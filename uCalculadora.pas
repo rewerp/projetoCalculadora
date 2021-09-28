@@ -76,7 +76,7 @@ begin
    GetMem(LVerInfo, LVerInfoSize);
    GetFileVersionInfo(PChar(ParamStr(0)), 0, LVerInfoSize, LVerInfo);
    VerQueryValue(LVerInfo, '\', Pointer(LVerValue), LVerValueSize);
-
+{teste}
    with LVerValue^ do
    begin
       Result := IntToStr(dwFileVersionMS shr 16);
@@ -85,7 +85,7 @@ begin
       Result := Result + '.' + IntToStr(dwFileVersionLS and $FFFF);
    end;
 
-   //FreeMem(LVerInfo, LVerInfoSize);
+   FreeMem(LVerInfo, LVerInfoSize);
 end;
 
 function TfrmCalculadora.Calcular(AValor1, AValor2: double;
