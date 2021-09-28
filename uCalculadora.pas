@@ -148,8 +148,8 @@ begin
   case AOperacao of
     SOMA:  LSimboloTag := ' + ';
     SUBTRACAO:  LSimboloTag := ' - ';
-    MULTIPLICACAO:  LSimboloTag := ' × ';
-    DIVISAO:  LSimboloTag := ' ÷ ';
+    MULTIPLICACAO:  LSimboloTag := ' Ã— ';
+    DIVISAO:  LSimboloTag := ' Ã· ';
     FATORIAL:  LSimboloTag := ' ! ';
     IGUAL:  LSimboloTag := ' = ';
   end;
@@ -233,7 +233,7 @@ end;
 
 procedure TfrmCalculadora.FormCreate(Sender: TObject);
 begin
-   lbVersao.Caption := 'versão ' + GetVersaoAplicacao() + '.23092021.1738';
+   lbVersao.Caption := 'versÃ£o ' + GetVersaoAplicacao() + '.23092021.1738';
 end;
 
 procedure TfrmCalculadora.FormKeyDown(Sender: TObject; var Key: Word;
