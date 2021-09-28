@@ -71,6 +71,7 @@ var
    LVerValueSize: DWORD;
    LVerValue: PVSFixedFileInfo;
    LHandle: DWORD;
+   LTeste: Integer;
 begin
    LVerInfoSize := GetFileVersionInfoSize(PChar(ParamStr(0)), LHandle);
    GetMem(LVerInfo, LVerInfoSize);
@@ -84,6 +85,8 @@ begin
       Result := Result + '.' + IntToStr(dwFileVersionLS shr 16);
       Result := Result + '.' + IntToStr(dwFileVersionLS and $FFFF);
    end;
+
+   LTeste := 25;
 
    FreeMem(LVerInfo, LVerInfoSize); {afdsadgasgqeafedvefrbqehjwgbnaqthwrtgnqaetrbwb}
 end;
