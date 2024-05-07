@@ -12,10 +12,9 @@ object frmCalculadora: TfrmCalculadora
   Font.Name = 'Courier New'
   Font.Style = []
   KeyPreview = True
-  OldCreateOrder = False
+  Position = poScreenCenter
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
-  PixelsPerInch = 96
   TextHeight = 14
   object btnSete: TSpeedButton
     Left = 20

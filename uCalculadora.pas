@@ -1,4 +1,4 @@
-unit uCalculadora;
+﻿unit uCalculadora;
 
 interface
 
@@ -71,13 +71,12 @@ var
    LVerValueSize: DWORD;
    LVerValue: PVSFixedFileInfo;
    LHandle: DWORD;
-   LTeste: Integer;
 begin
    LVerInfoSize := GetFileVersionInfoSize(PChar(ParamStr(0)), LHandle);
    GetMem(LVerInfo, LVerInfoSize);
    GetFileVersionInfo(PChar(ParamStr(0)), 0, LVerInfoSize, LVerInfo);
    VerQueryValue(LVerInfo, '\', Pointer(LVerValue), LVerValueSize);
-{teste}
+
    with LVerValue^ do
    begin
       Result := IntToStr(dwFileVersionMS shr 16);
@@ -85,8 +84,6 @@ begin
       Result := Result + '.' + IntToStr(dwFileVersionLS shr 16);
       Result := Result + '.' + IntToStr(dwFileVersionLS and $FFFF);
    end;
-
-   LTeste := 25;
 
    FreeMem(LVerInfo, LVerInfoSize); {afdsadgasgqeafedvefrbqehjwgbnaqthwrtgnqaetrbwb}
 end;
@@ -243,7 +240,7 @@ procedure TfrmCalculadora.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   case Key of
-    27                     : btnLimpar.Click();  {ESC}
+    VK_ESCAPE              : btnLimpar.Click();
     VK_BACK                : btnApagar.Click();
     VK_RETURN              : btnIgual.Click();
     VK_NUMPAD0..VK_NUMPAD9 : AtribuirValor(IntToStr(key-96));
@@ -254,7 +251,7 @@ begin
     VK_DECIMAL             : btnVirgula.Click();
     VK_OEM_COMMA           : btnVirgula.Click();
     VK_OEM_PERIOD          : btnVirgula.Click();
-    194                    : btnVirgula.Click();  {NUM PONTO}
+    194                    : btnVirgula.Click(); {NUM PONTO}
   end;
 end;
 
